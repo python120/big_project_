@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+{#{% load static %}#}
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>{% block title %}{% endblock title %}</title>
+
+
+        <link rel="stylesheet" type="text/css" href="{{ static('css/reset.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ static('css/main.css') }}">
+        <script type="text/javascript" src="{{ static('js/host.js') }}"></script>
+        <script type="text/javascript" src="{{ static('js/vue-2.5.16.js') }}"></script>
+        <script type="text/javascript" src="{{ static('js/axios-0.18.0.min.js') }}"></script>
+    {% block head %}
+        <script type="text/javascript" src="{{ static('js/jquery-1.12.4.min.js') }}"></script>
+    {% endblock head %}
+</head>
+<body>
+    <div id="app" v-cloak>
+    <div class="header_con" >
+        <div class="header">
+            <div class="welcome fl">欢迎来到美多商城!</div>
+            {#<span>|</span>#}
+            <div class="sina_user_msg">[[ sina_user_name ]]</div>
+            <a :href="profile_url"><img :src="sina_img_url" alt="微博头像" v-show="sina_img_url" class="sina_user_img" width="30px" height="30px"></a>
+            {#<input :value="sina_user_name" type="text" name="">#}
+            <div class="fr">
+                <div v-if="username" class="login_btn fl">
+                    欢迎您：<em>[[ username ]]</em>
+                    <span>|</span>
+                    <a href="{{ url('users:logout') }}">退出</a>
+                </div>
+                <div v-else class="login_btn fl">
+                    <a href="{{ url('users:login') }}">登录</a>
+                    <span>|</span>
+                    <a href="{{ url('users:register') }}">注册</a>
+                </div>
+                <div class="user_link fl">
+                    <span>|</span>
+                    <a href="{{ url('users:info') }}">用户中心</a>
+                    <span>|</span>
+                    <a href="/carts/">我的购物车</a>
+                    <span>|</span>
+                    <a href="/orders/info/1/">我的订单</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block content %}{% endblock content %}
+
+
+    <div class="footer">
+        <div class="foot_link">
+            <a href="#">关于我们</a>
+            <span>|</span>
+            <a href="#">联系我们</a>
+            <span>|</span>
+            <a href="#">招聘人才</a>
+            <span>|</span>
+            <a href="#">友情链接</a>
+        </div>
+        <p>CopyRight © 2016 北京美多商业股份有限公司 All Rights Reserved</p>
+        <p>电话：010-****888    京ICP备*******8号</p>
+    </div>
+    </div>
+    {#    继承之模板都得先加载微博获取函数与利用cookie获取用户名函数, 先拥有这些函数加载别的js生成VUE对象时才能调用#}
+{#    先加载公共函数js就像先定义函数，才能被调用，后加载生成VUE对象的js,再调用定义过的函数,一个页面只能存活一个VUE对象，所以不能加载两个都会创建VUE对象的js文件#}
+    <script type="text/javascript" src="{{ static('js/common.js') }}"></script>
+    {% block bottom %}
+        {#        base.js拥有一个VUE对象#}
+        <script type="text/javascript" src="{{ static('js/base.js') }}"></script>
+    {% endblock bottom %}
+
+
+</body>
+</html>
